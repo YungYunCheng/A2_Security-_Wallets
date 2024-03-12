@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Balance</title>
+</head>
+<body>
+    <h1>View Balance</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Wallet ID</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody id="balanceTableBody">
+            <!-- Table data will be dynamically inserted here -->
+        </tbody>
+    </table>
+
+
+    <script>
+        fetch('/get_balance_data')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('balanceTableBody');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.id}</td>
+                    <td>${row.wallet_id}</td>
+                    <td>${row.wallet_amount}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    </script>
+
+        <!-- Add Go Back link here -->
+        <a href="/">Go Back</a>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EDM Page</title>
+</head>
+<body>
+    <h1>Electronic Money Distribution (EDM)</h1>
+    <form id="edmForm">
+        <input type="text" id="studentId" placeholder="Student ID">
+        <input type="number" id="amount" placeholder="Amount">
+        <button type="button" onclick="generateEMD()">Generate EMD</button>
+    </form>
+    <div id="edmResult"></div>
+
+    <!-- Add Go Back link here -->
+    <a href="/">Go Back</a>
+
+    <script>
+        function generateEMD() {
+            var studentId = document.getElementById('studentId').value;
+            var amount = document.getElementById('amount').value;
+        
+            // Making an AJAX call to the Flask backend
+            fetch('/generate_emd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `studentId=${studentId}&amount=${amount}` // Sending data as URL-encoded form
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Displaying response from the server
+                document.getElementById('edmResult').innerText = data.message || data.error;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        </script>
+</body>
+</html>

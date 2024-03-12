@@ -1,0 +1,46 @@
+<!-- sender.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sender Interface</title>
+</head>
+<body>
+    <h1>Sender Interface</h1>
+    <form id="sendFundsForm">
+        <label for="walletId">Wallet ID:</label>
+        <input type="text" id="walletId" name="wallet_id"><br><br>
+        <label for="receiverId">Receiver ID:</label>
+        <input type="text" id="receiverId" name="receiver_id"><br><br>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount"><br><br>
+        <button type="button" onclick="sendFunds()">Send Funds</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function sendFunds() {
+            var form = document.getElementById("sendFundsForm");
+            var formData = new FormData(form);
+
+            fetch('/send_funds', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = "Token generated: " + data.token;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+
+            <!-- Add Go Back link here -->
+            <a href="/">Go Back</a>
+</body>
+</html>
+
