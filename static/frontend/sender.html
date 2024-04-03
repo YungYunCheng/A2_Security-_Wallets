@@ -10,8 +10,8 @@
 <body>
     <h1>Sender Interface</h1>
     <form id="sendFundsForm">
-        <label for="walletId">Wallet ID:</label>
-        <input type="text" id="walletId" name="wallet_id"><br><br>
+        <!-- Include sender ID as a hidden input field -->
+        <input type="hidden" id="senderId" name="sender_id" value="{{ user_id }}">
         <label for="receiverId">Receiver ID:</label>
         <input type="text" id="receiverId" name="receiver_id"><br><br>
         <label for="amount">Amount:</label>
@@ -39,8 +39,8 @@
         }
     </script>
 
-            <!-- Add Go Back link here -->
-            <a href="/">Go Back</a>
+    <!-- Add Go Back link here -->
+    <a href="/">Go Back</a>
 </body>
 </html>
 

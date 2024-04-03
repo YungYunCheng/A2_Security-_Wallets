@@ -40,6 +40,7 @@ def create_table():
             wallets_table_query = """
             CREATE TABLE wallets (
                 id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id VARCHAR(255) NOT NULL,
                 wallet_id VARCHAR(255) NOT NULL,
                 wallet_amount DECIMAL(10, 2) NOT NULL,
                 wallet_B_amount DECIMAL(10, 2) NOT NULL,
@@ -63,6 +64,19 @@ def create_table():
             """
             cursor.execute(transactions_table_query)
             print("Table transactions created successfully")
+
+            # Create the users table
+            users_table_query = """
+            CREATE TABLE IF NOT EXISTS users (
+                    uuid INT AUTO_INCREMENT PRIMARY KEY,
+                    user_id VARCHAR(255) NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    security_key VARCHAR(255) NOT NULL
+                )
+            """
+            cursor.execute(users_table_query)
+            print("Table users created successfully")
+
 
     except Error as e:
         print(f"Error while connecting to MySQL: {e}")

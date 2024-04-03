@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from flask import session
 
 def get_balance_data():
     try:
@@ -12,7 +13,20 @@ def get_balance_data():
 
         if connection.is_connected():
             cursor = connection.cursor(dictionary=True)
-            cursor.execute('SELECT * FROM wallets')  # Replace YourTableName with the actual table name
+            # Get the user_id of the logged-in user from the session
+            user_id = session.get('user_id')
+            if not user_id:
+                print("User not logged in.")
+                return None
+
+            # Fetch balance data specific to the logged-in user
+            cursor.execute("""
+                SELECT w.* 
+                FROM wallets w 
+                JOIN users u ON w.user_id = u.user_id 
+                WHERE u.user_id = %s
+            """, (user_id,))
+            
             rows = cursor.fetchall()
             return rows
 
@@ -20,11 +34,14 @@ def get_balance_data():
         print(f'Error while connecting to MySQL: {e}')
 
     finally:
-        if connection.is_connected():
+        if connection and connection.is_connected():
             cursor.close()
             connection.close()
 
 if __name__ == '__main__':
     balance_data = get_balance_data()
-    for row in balance_data:
-        print(row)
+    if balance_data:
+        for row in balance_data:
+            print(row)
+    else:
+        print("No balance data retrieved.")

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Page</title>
+</head>
+<body>
+    {% if user_links %}
+    <div>Welcome, user ID: <strong>{{ user_id }}</strong></div>
+    <div>
+        <a href="/logout">Logout</a>
+    </div>
+    <div id="user-links">
+        <h2>Creating EMD</h2>
+        <div>
+            <a href="/emd">Go to EMD Page</a>
+        </div>
+        <h2>Sending Money</h2>
+        <div>
+            <a href="/sender">Go to Sender Money Page</a>
+        </div>
+        <h2>Receiving Money</h2>
+        <div>
+            <a href="/receiver">Go to Receive Money Page</a>
+        </div>
+        <h2>Balance</h2>
+        <div>
+            <a href="/view_balance">View Current Balance</a>
+        </div>
+    </div>
+    {% else %}
+    <p>Welcome, please <a href="/login">login</a> or <a href="/register">register</a>.</p>
+    {% endif %}
+
+    <!-- Creators section -->
+    <h2>Creators</h2>
+    <p>Daphney Cheng (A01045959)</p>
+    <p>Nguyen Phan (A01319920)</p>
+    <p>James Guo (A01063688)</p>
+</body>
+</html>
